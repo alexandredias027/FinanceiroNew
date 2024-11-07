@@ -16,5 +16,4 @@ const Home = async () => {
     </div>
   );
 };
-
 export default Home;
