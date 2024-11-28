@@ -10,6 +10,7 @@ import {
   DialogTrigger,
   DialogTitle,
   DialogHeader,
+  DialogClose,
 } from "./ui/dialog";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,6 +39,7 @@ import {
   TRANSACTION_PAYMENT_METHOD_OPTIONS,
   TRANSACTION_TYPE_OPTIONS,
 } from "../_constantes/transactions";
+import { DatePicker } from "./ui/data-picker";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, { message: "Nome é obrigatório" }),
@@ -61,8 +63,10 @@ const formSchema = z.object({
   }),
 });
 
+type formSchema = z.infer<typeof formSchema>;
+
 const AddTransactionButton = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<formSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       amount: "",
@@ -74,10 +78,12 @@ const AddTransactionButton = () => {
     },
   });
 
-  const onSubmit = () => {};
+  const onSubmit = (data: formSchema) => {
+    console.log(data);
+  };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={(open) => !open && form.reset()}>
       <DialogTrigger asChild>
         <Button className="rounded-full font-bold">
           <ArrowDownUpIcon />
@@ -204,9 +210,31 @@ const AddTransactionButton = () => {
               )}
             />
 
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Data</FormLabel>
+                  <DatePicker
+                    value={field.value || ""}
+                    onChange={field.onChange}
+                  />
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <DialogFooter>
-              <Button variant="outline">Cancelar</Button>
-              <Button variant="outline">Adicionar</Button>
+              <DialogClose>
+                <Button type="button" variant="outline">
+                  Cancelar
+                </Button>
+              </DialogClose>
+              <Button type="submit" variant="outline">
+                Adicionar
+              </Button>
             </DialogFooter>
           </form>
         </Form>
