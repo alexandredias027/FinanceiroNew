@@ -41,7 +41,7 @@ enum TransactionCategory {
   UTILITY
   SALARY
   EDUCATION
-  OUTHER
+  OTHER
 }
 
 enum TransactionPaymentMethod {
