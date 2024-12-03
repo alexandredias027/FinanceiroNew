@@ -114,4 +114,8 @@ export const TRANSACTION_CATEGORY_OPTIONS = [
     value: TransactionCategory.UTILITY,
     label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.UTILITY],
   },
+  {
+    value: TransactionCategory.INVESTMENT,
+    label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.INVESTMENT],
+  },
 ];
